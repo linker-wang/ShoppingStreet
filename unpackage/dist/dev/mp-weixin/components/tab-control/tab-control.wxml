@@ -1,0 +1,1 @@
+<view class="tab-control"><block wx:for="{{a}}" wx:for-item="item" wx:key="e"><view class="tab-item" style="{{'color:' + item.b + ';' + ('border-color:' + item.c)}}" bindtap="{{item.d}}">{{item.a}}</view></block></view>

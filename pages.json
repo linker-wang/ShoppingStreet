@@ -34,6 +34,14 @@
 				"navigationBarTitleText": "分类",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path" : "pages/webview/webview",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
 		}
 	],
 	"globalStyle": {
