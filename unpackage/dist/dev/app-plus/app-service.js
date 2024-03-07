@@ -31,21 +31,6 @@ if (uni.restoreGlobal) {
 }
 (function(vue, shared) {
   "use strict";
-  const ON_LOAD = "onLoad";
-  function formatAppLog(type, filename, ...args) {
-    if (uni.__log__) {
-      uni.__log__(type, filename, ...args);
-    } else {
-      console[type].apply(console, [...args, filename]);
-    }
-  }
-  function resolveEasycom(component, easycom) {
-    return shared.isString(component) ? easycom : component;
-  }
-  const createHook = (lifecycle) => (hook, target = vue.getCurrentInstance()) => {
-    !vue.isInSSRComponentSetup && vue.injectHook(lifecycle, hook, target);
-  };
-  const onLoad = /* @__PURE__ */ createHook(ON_LOAD);
   const _export_sfc = (sfc, props) => {
     const target = sfc.__vccOpts || sfc;
     for (const [key, val] of props) {
@@ -53,7 +38,7 @@ if (uni.restoreGlobal) {
     }
     return target;
   };
-  const _sfc_main$b = {
+  const _sfc_main$d = {
     __name: "tab-control",
     props: {
       tabList: {
@@ -98,12 +83,252 @@ if (uni.restoreGlobal) {
       };
     }
   };
-  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["__scopeId", "data-v-86d07902"], ["__file", "F:/文件/前端/代码/uniapp_project/xgShop/xgShop/components/tab-control/tab-control.vue"]]);
-  const _sfc_main$a = {};
-  function _sfc_render$4(_ctx, _cache) {
-    return vue.openBlock(), vue.createElementBlock("view", { class: "shop-list" });
+  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["__scopeId", "data-v-86d07902"], ["__file", "F:/文件/前端/代码/uniapp_project/xgShop/xgShop/components/tab-control/tab-control.vue"]]);
+  const ON_LOAD = "onLoad";
+  const ON_REACH_BOTTOM = "onReachBottom";
+  function formatAppLog(type, filename, ...args) {
+    if (uni.__log__) {
+      uni.__log__(type, filename, ...args);
+    } else {
+      console[type].apply(console, [...args, filename]);
+    }
   }
-  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$4], ["__file", "F:/文件/前端/代码/uniapp_project/xgShop/xgShop/components/shop-list/shop-list.vue"]]);
+  function resolveEasycom(component, easycom) {
+    return shared.isString(component) ? easycom : component;
+  }
+  const createHook = (lifecycle) => (hook, target = vue.getCurrentInstance()) => {
+    !vue.isInSSRComponentSetup && vue.injectHook(lifecycle, hook, target);
+  };
+  const onLoad = /* @__PURE__ */ createHook(ON_LOAD);
+  const onReachBottom = /* @__PURE__ */ createHook(ON_REACH_BOTTOM);
+  const _imports_0$1 = "/static/images/common/favor.png";
+  const _sfc_main$c = {
+    __name: "shop-item",
+    props: {
+      imgUrl: {
+        type: String,
+        default: ""
+      },
+      title: {
+        type: String,
+        default: ""
+      },
+      price: {
+        type: String,
+        default: ""
+      },
+      collectCounter: {
+        type: String,
+        default: "0"
+      }
+    },
+    setup(__props) {
+      const props = __props;
+      const getPrice = vue.computed(() => {
+        return `¥${props.price}`;
+      });
+      return (_ctx, _cache) => {
+        return vue.openBlock(), vue.createElementBlock("view", { class: "shop-item" }, [
+          vue.createElementVNode("image", {
+            class: "shop-image",
+            "lazy-load": true,
+            src: __props.imgUrl,
+            mode: "widthFix"
+          }, null, 8, ["src"]),
+          vue.createElementVNode(
+            "view",
+            { class: "shop-title" },
+            vue.toDisplayString(__props.title),
+            1
+            /* TEXT */
+          ),
+          vue.createElementVNode("view", { class: "other-info" }, [
+            vue.createElementVNode(
+              "view",
+              { class: "shop-price" },
+              vue.toDisplayString(vue.unref(getPrice)),
+              1
+              /* TEXT */
+            ),
+            vue.createElementVNode("image", {
+              class: "star-icon",
+              src: _imports_0$1,
+              mode: "heightFix"
+            }),
+            vue.createElementVNode(
+              "view",
+              { class: "collect-counter" },
+              vue.toDisplayString(__props.collectCounter),
+              1
+              /* TEXT */
+            )
+          ])
+        ]);
+      };
+    }
+  };
+  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["__scopeId", "data-v-a8327be0"], ["__file", "F:/文件/前端/代码/uniapp_project/xgShop/xgShop/components/shop-item/shop-item.vue"]]);
+  const _sfc_main$b = {
+    name: "UniGridItem",
+    inject: ["grid"],
+    props: {
+      index: {
+        type: Number,
+        default: 0
+      }
+    },
+    data() {
+      return {
+        column: 0,
+        showBorder: true,
+        square: true,
+        highlight: true,
+        left: 0,
+        top: 0,
+        openNum: 2,
+        width: 0,
+        borderColor: "#e5e5e5"
+      };
+    },
+    created() {
+      this.column = this.grid.column;
+      this.showBorder = this.grid.showBorder;
+      this.square = this.grid.square;
+      this.highlight = this.grid.highlight;
+      this.top = this.hor === 0 ? this.grid.hor : this.hor;
+      this.left = this.ver === 0 ? this.grid.ver : this.ver;
+      this.borderColor = this.grid.borderColor;
+      this.grid.children.push(this);
+      this.width = this.grid.width;
+    },
+    beforeDestroy() {
+      this.grid.children.forEach((item, index) => {
+        if (item === this) {
+          this.grid.children.splice(index, 1);
+        }
+      });
+    },
+    methods: {
+      _onClick() {
+        this.grid.change({
+          detail: {
+            index: this.index
+          }
+        });
+      }
+    }
+  };
+  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
+    return $data.width ? (vue.openBlock(), vue.createElementBlock(
+      "view",
+      {
+        key: 0,
+        style: vue.normalizeStyle("width:" + $data.width + ";" + ($data.square ? "height:" + $data.width : "")),
+        class: "uni-grid-item"
+      },
+      [
+        vue.createElementVNode(
+          "view",
+          {
+            class: vue.normalizeClass([{ "uni-grid-item--border": $data.showBorder, "uni-grid-item--border-top": $data.showBorder && $props.index < $data.column, "uni-highlight": $data.highlight }, "uni-grid-item__box"]),
+            style: vue.normalizeStyle({ "border-right-color": $data.borderColor, "border-bottom-color": $data.borderColor, "border-top-color": $data.borderColor }),
+            onClick: _cache[0] || (_cache[0] = (...args) => $options._onClick && $options._onClick(...args))
+          },
+          [
+            vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
+          ],
+          6
+          /* CLASS, STYLE */
+        )
+      ],
+      4
+      /* STYLE */
+    )) : vue.createCommentVNode("v-if", true);
+  }
+  const __easycom_2 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$5], ["__scopeId", "data-v-7a807eb7"], ["__file", "F:/文件/前端/代码/uniapp_project/xgShop/xgShop/uni_modules/uni-grid/components/uni-grid-item/uni-grid-item.vue"]]);
+  const _sfc_main$a = {
+    name: "UniGrid",
+    emits: ["change"],
+    props: {
+      // 每列显示个数
+      column: {
+        type: Number,
+        default: 3
+      },
+      // 是否显示边框
+      showBorder: {
+        type: Boolean,
+        default: true
+      },
+      // 边框颜色
+      borderColor: {
+        type: String,
+        default: "#D2D2D2"
+      },
+      // 是否正方形显示,默认为 true
+      square: {
+        type: Boolean,
+        default: true
+      },
+      highlight: {
+        type: Boolean,
+        default: true
+      }
+    },
+    provide() {
+      return {
+        grid: this
+      };
+    },
+    data() {
+      const elId = `Uni_${Math.ceil(Math.random() * 1e6).toString(36)}`;
+      return {
+        elId,
+        width: 0
+      };
+    },
+    created() {
+      this.children = [];
+    },
+    mounted() {
+      this.$nextTick(() => {
+        this.init();
+      });
+    },
+    methods: {
+      init() {
+        setTimeout(() => {
+          this._getSize((width) => {
+            this.children.forEach((item, index) => {
+              item.width = width;
+            });
+          });
+        }, 50);
+      },
+      change(e) {
+        this.$emit("change", e);
+      },
+      _getSize(fn) {
+        uni.createSelectorQuery().in(this).select(`#${this.elId}`).boundingClientRect().exec((ret) => {
+          this.width = parseInt((ret[0].width - 1) / this.column) + "px";
+          fn(this.width);
+        });
+      }
+    }
+  };
+  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "uni-grid-wrap" }, [
+      vue.createElementVNode("view", {
+        id: $data.elId,
+        ref: "uni-grid",
+        class: vue.normalizeClass(["uni-grid", { "uni-grid--border": $props.showBorder }]),
+        style: vue.normalizeStyle({ "border-left-color": $props.borderColor })
+      }, [
+        vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
+      ], 14, ["id"])
+    ]);
+  }
+  const __easycom_3 = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$4], ["__scopeId", "data-v-07acefee"], ["__file", "F:/文件/前端/代码/uniapp_project/xgShop/xgShop/uni_modules/uni-grid/components/uni-grid/uni-grid.vue"]]);
   var isVue2 = false;
   function set(target, key, val) {
     if (Array.isArray(target)) {
@@ -1574,12 +1799,37 @@ This will fail in production.`);
   const request1 = new MyRequest({
     baseUrl: "http://123.207.32.32:7888/api/hy66"
   });
+  const tabs = [
+    {
+      title: "流行",
+      type: "pop"
+    },
+    {
+      title: "新款",
+      type: "new"
+    },
+    {
+      title: "精选",
+      type: "sell"
+    }
+  ];
+  const getDefaultGoodsList = () => {
+    const goodsList = {};
+    tabs.forEach((item) => {
+      goodsList[item.type] = {
+        page: 0,
+        list: []
+      };
+    });
+    return goodsList;
+  };
   const useHome = defineStore("home", {
     state: () => ({
       bannerList: [],
       recommendList: [],
       dKeywordList: [],
-      keywordsList: []
+      keywordsList: [],
+      goodsList: getDefaultGoodsList()
     }),
     getters: {},
     actions: {
@@ -1590,10 +1840,14 @@ This will fail in production.`);
         this.bannerList = ((_b = (_a = res == null ? void 0 : res.data) == null ? void 0 : _a.banner) == null ? void 0 : _b.list) || [];
         this.recommendList = ((_d = (_c = res == null ? void 0 : res.data) == null ? void 0 : _c.recommend) == null ? void 0 : _d.list) || [], this.dKeywordList = ((_f = (_e = res == null ? void 0 : res.data) == null ? void 0 : _e.dKeyword) == null ? void 0 : _f.list) || [], this.keywordsList = ((_h = (_g = res == null ? void 0 : res.data) == null ? void 0 : _g.weywords) == null ? void 0 : _h.list) || [];
       },
-      /* 获取首页商品列表 */
-      async getShopListData(type = "pop", page = 1) {
+      /* 获取商品列表数据 */
+      async getShopListData(type = "pop") {
+        const page = this.goodsList[type].page + 1;
         const res = await request1.get(`/home/data?type=${type}&page=${page}`);
-        formatAppLog("log", "at stores/useHome.js:27", res.data);
+        if (res.success) {
+          this.goodsList[type].page = page;
+          this.goodsList[type].list.push(...res.data.list);
+        }
       }
     }
   });
@@ -1716,7 +1970,7 @@ This will fail in production.`);
   const _sfc_main$6 = {
     __name: "home",
     setup(__props) {
-      const { bannerList, recommendList, getBannerData, getShopListData } = vue.toRefs(useHome());
+      const { bannerList, recommendList, goodsList, getBannerData, getShopListData } = vue.toRefs(useHome());
       const toBannerWebview = (index) => {
         uni.navigateTo({
           url: `/pages/webview/webview?link=${bannerList.value[index].link}`
@@ -1727,16 +1981,35 @@ This will fail in production.`);
           url: `/pages/webview/webview?link=${recommendList.value[index].link}`
         });
       };
+      const toShopWebview = (link) => {
+        uni.navigateTo({
+          url: `/pages/webview/webview?link=${link}`
+        });
+      };
+      const tabList = tabs.map((item) => {
+        return item.title;
+      });
+      const currentShopList = vue.ref(goodsList.value.pop.list);
+      const currentShopListIndex = vue.ref(0);
       const switchTab = (index) => {
-        formatAppLog("log", "at pages/home/home.vue:59", index);
-        getShopListData.value();
+        const type = tabs[index].type;
+        currentShopList.value = goodsList.value[type].list;
+        currentShopListIndex.value = index;
       };
       onLoad(() => {
         getBannerData.value();
+        tabs.forEach((item) => {
+          getShopListData.value(item.type);
+        });
+      });
+      onReachBottom(() => {
+        getShopListData.value(tabs[currentShopListIndex.value].type);
       });
       return (_ctx, _cache) => {
         const _component_tab_control = resolveEasycom(vue.resolveDynamicComponent("tab-control"), __easycom_0);
-        const _component_shop_list = resolveEasycom(vue.resolveDynamicComponent("shop-list"), __easycom_1);
+        const _component_shop_item = resolveEasycom(vue.resolveDynamicComponent("shop-item"), __easycom_1);
+        const _component_uni_grid_item = resolveEasycom(vue.resolveDynamicComponent("uni-grid-item"), __easycom_2);
+        const _component_uni_grid = resolveEasycom(vue.resolveDynamicComponent("uni-grid"), __easycom_3);
         return vue.openBlock(), vue.createElementBlock("view", { class: "home" }, [
           vue.createCommentVNode(" 轮播图 "),
           vue.createVNode(HomeBanner, {
@@ -1752,12 +2025,46 @@ This will fail in production.`);
           vue.createVNode(HomePopular, { title: "本周流行" }),
           vue.createCommentVNode(" 商品标签 "),
           vue.createVNode(_component_tab_control, {
-            tabList: ["流行", "新款", "精选"],
+            tabList: vue.unref(tabList),
             tabActiveColor: "#ff8198",
             onChangeIndex: switchTab
-          }),
+          }, null, 8, ["tabList"]),
           vue.createCommentVNode(" 商品列表 "),
-          vue.createVNode(_component_shop_list)
+          vue.createVNode(_component_uni_grid, {
+            column: 2,
+            square: false,
+            showBorder: false,
+            highlight: false
+          }, {
+            default: vue.withCtx(() => [
+              (vue.openBlock(true), vue.createElementBlock(
+                vue.Fragment,
+                null,
+                vue.renderList(currentShopList.value, (item, index) => {
+                  return vue.openBlock(), vue.createBlock(_component_uni_grid_item, {
+                    key: item,
+                    index
+                  }, {
+                    default: vue.withCtx(() => [
+                      vue.createVNode(_component_shop_item, {
+                        imgUrl: item.show.img,
+                        title: item.title,
+                        price: item.price,
+                        collectCounter: item.cfav.toString(),
+                        onClick: ($event) => toShopWebview(item.clientUrl)
+                      }, null, 8, ["imgUrl", "title", "price", "collectCounter", "onClick"])
+                    ]),
+                    _: 2
+                    /* DYNAMIC */
+                  }, 1032, ["index"]);
+                }),
+                128
+                /* KEYED_FRAGMENT */
+              ))
+            ]),
+            _: 1
+            /* STABLE */
+          })
         ]);
       };
     }

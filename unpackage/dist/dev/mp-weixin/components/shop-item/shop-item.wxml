@@ -1,0 +1,1 @@
+<view class="shop-item"><image class="shop-image" lazy-load="{{true}}" src="{{a}}" mode="widthFix"></image><view class="shop-title">{{b}}</view><view class="other-info"><view class="shop-price">{{c}}</view><image class="star-icon" src="{{d}}" mode="heightFix"></image><view class="collect-counter">{{e}}</view></view></view>

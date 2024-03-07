@@ -4,7 +4,9 @@
 			"path": "pages/home/home",
 			"style": {
 				"navigationBarTitleText": "首页",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": false,
+				/* 设置到达底部加载时,离底部的距离 */
+				"onReachBottomDistance": 400
 			}
 		},
 		{
@@ -36,11 +38,10 @@
 			}
 		},
 		{
-			"path" : "pages/webview/webview",
-			"style" : 
-			{
-				"navigationBarTitleText" : "",
-				"enablePullDownRefresh" : false
+			"path": "pages/webview/webview",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
 			}
 		}
 	],

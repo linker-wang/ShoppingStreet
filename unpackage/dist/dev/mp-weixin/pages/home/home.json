@@ -1,9 +1,12 @@
 {
   "navigationBarTitleText": "首页",
   "enablePullDownRefresh": false,
+  "onReachBottomDistance": 400,
   "usingComponents": {
     "tab-control": "../../components/tab-control/tab-control",
-    "shop-list": "../../components/shop-list/shop-list",
+    "shop-item": "../../components/shop-item/shop-item",
+    "uni-grid-item": "../../uni_modules/uni-grid/components/uni-grid-item/uni-grid-item",
+    "uni-grid": "../../uni_modules/uni-grid/components/uni-grid/uni-grid",
     "home-banner": "./components/home-banner",
     "home-recommend": "./components/home-recommend",
     "home-popular": "./components/home-popular"

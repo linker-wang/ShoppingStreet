@@ -47,6 +47,7 @@
 		display: flex;
 		flex-flow: row nowrap;
 		justify-content: space-around;
+		margin-bottom: 10px;
 
 		.tab-item {
 			width: 100rpx;
